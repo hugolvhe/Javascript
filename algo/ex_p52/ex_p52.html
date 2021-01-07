@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf8" />
+    <script type="text/javascript" src="./exercice3.js"></script> 
+    <title>
+        JS Cheat Sheet
+    </title>
+</head>
+
+<body>
+    <script>
+        function afficherPlatsDuJour(nomEntree, nomPlat, nomDessert, prixEntree, prixPlat, prixDessert) {
+            if (typeof (nomEntree) !== "string" && typeof (nomPlat) !== "string" && typeof (nomEntreeDessert) !== "string" && typeof (prixEntree) !== "number" && typeof (prixPlat) !== "number" && typeof (prixDessert) !== "number") {
+                console.log("Pb type argument");
+                return 1;
+            }
+            document.write("Le chef vous propose aujourd'hui: </br>");
+            document.write("Entree : " + nomEntree + " (" + prixEntree + "€)</br>");
+            document.write("Plat : " + nomPlat + " (" + prixPlat + "€)</br>");
+            document.write("Dessert : " + nomDessert + " (" + prixDessert + "euros€)</br>");
+            document.write("Nous remercions votre aimable clientèle par avance de vouloir régler en bitcoin ₿₿₿");
+             console.log("Le chef vous propose aujourd'hui:")
+            // console.log("Entree : " + nomEntree + " (" + prixEntree + "€)");
+            // console.log("Plat : " + nomPlat + " (" + prixPlat + "€)");
+            // console.log("Dessert : " + nomDessert + " (" + prixDessert + "euros€)");
+            // console.log("Nous remercions votre aimable clientèle par avance de vouloir régler en bitcoin ₿₿₿");
+            return 0;
+        }
+        afficherPlatsDuJour("Oeufs mimose", "entrecotes frites", "Banofee", 3, 10, 5);
+
+    </script>
+</body>
+
+</html>

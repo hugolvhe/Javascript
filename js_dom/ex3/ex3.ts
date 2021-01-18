@@ -1,20 +1,20 @@
 //3.1
 
-interface UserList {
+interface User {
     id:number
     prenom: string;
     age: any;
     role: string;
 };
 
-const userlist: Array<UserList> = [
+const userlist: Array<User> = [
     {  id:1,prenom: "Damien", age: 40, role: "utilisateur" },
     {  id:2,prenom: "Camille", age: 29, role: "administrateur" },
     {  id:3,prenom: "Marie", age: 35, role: "utilisateur" },
     {  id:4,prenom: "Roger", age: 60, role: "utilisateur" }
 ];
 
-let localUserlist: Array<UserList> = localStorage.getItem("userList") === null ? userlist : JSON.parse(localStorage.getItem("userList")!);
+let localUserlist: Array<User> = localStorage.getItem("userList") === null ? userlist : JSON.parse(localStorage.getItem("userList")!);
 localStorage.setItem("userList",JSON.stringify(localUserlist));
 const divUserlist: HTMLDivElement | null = document.querySelector("#userList");
 
@@ -26,9 +26,9 @@ const divUserlist: HTMLDivElement | null = document.querySelector("#userList");
  * @return void            
  * *************************************** */
 
-function setUserList(userlist: Array<UserList>): void {
+function setUserList(userlist: Array<User>): void {
     let i = 0;
-    userlist.forEach((elem: UserList) => {
+    userlist.forEach((elem: User) => {
         i++;
         const p = document.createElement("p")
         p.textContent = `ID:${elem.id}; Prenom: ${elem.prenom};Age: ${elem.age};Role: ${elem.role}`;
@@ -40,14 +40,14 @@ function setUserList(userlist: Array<UserList>): void {
 //3.2
 /******************************************
  *  Colore chaque utilisateur dans le DOM suivant son role 
- *  @param void
+ *  @param Liste des utilisateurs a modifier
  *  @return void            
  * *************************************** */
-function setColorByRole() {
+function setColorByRole(arrayUsers:Array<User>) {
     const listPofUsers: NodeListOf<HTMLParagraphElement> | undefined = divUserlist!.querySelectorAll("p");
     let i = 0;
     listPofUsers!.forEach((p: HTMLParagraphElement) => {
-        p.style.color = localUserlist[i].role === "administrateur" ? "red" : "blue";
+        p.style.color = arrayUsers[i].role === "administrateur" ? "red" : "blue";
         i++;
     });
 }
@@ -70,7 +70,7 @@ function addMouseEvent(): void {
                 evntChild!.stopImmediatePropagation();
                 const domUserId = parseInt(elem.getAttribute("id")!, 10);
                 modifyUser(domUserId);
-                setColorByRole();
+                setColorByRole(localUserlist);
             })
         })
         elem.addEventListener("mouseleave", (evnt: Event) => {
@@ -85,7 +85,7 @@ function addMouseEvent(): void {
  *  @return void            
  * *************************************** */
 function modifyUser(domUserId: number): void {
-    const user: UserList = {
+    const user: User = {
         id: domUserId,
         prenom: `${(<HTMLInputElement>document.querySelector("form > input[name='name']")).value}`,
         age: `${(<HTMLInputElement>document.querySelector("form > input[name='age']")).value}`,
@@ -169,7 +169,7 @@ function addButtons() {
  * @return: void      
  * *************************************** */
 function addNewUser() {
-    const user: UserList = {
+    const user: User = {
         id: divUserlist!.querySelectorAll("p").length + 1,
         prenom: `${(<HTMLInputElement>document.querySelector("form > input[name='name']")).value}`,
         age: `${(<HTMLInputElement>document.querySelector("form > input[name='age']")).value}`,
@@ -189,7 +189,7 @@ inputCreateUser!.addEventListener("click", (evnt) => {
     divUserlist!.innerHTML = "";
     setUserList(localUserlist);
     addNewUser();
-    setColorByRole();
+    setColorByRole(localUserlist);
     addMouseEvent();
     addButtons();
 });
@@ -208,7 +208,7 @@ btnSortById!.addEventListener("click", (evnt: Event) => {
     divUserlist!.innerHTML = "";
     setUserList(localUserlist);
     localStorage.setItem("userList", JSON.stringify(localUserlist));
-    setColorByRole();
+    setColorByRole(localUserlist);
     addMouseEvent();
     addButtons();
 });
@@ -225,7 +225,7 @@ btnSortByName!.addEventListener("click", (evnt: Event) => {
     divUserlist!.innerHTML = "";
     setUserList(localUserlist);
     localStorage.setItem("userList", JSON.stringify(localUserlist));
-    setColorByRole();
+    setColorByRole(localUserlist);
     addMouseEvent();
     addButtons();
 });
@@ -242,7 +242,7 @@ btnSortByAge!.addEventListener("click", (evnt: Event) => {
     divUserlist!.innerHTML = "";
     setUserList(localUserlist);
     localStorage.setItem("userList", JSON.stringify(localUserlist));
-    setColorByRole();
+    setColorByRole(localUserlist);
     addMouseEvent();
     addButtons();
 });
@@ -255,7 +255,7 @@ const inputSearch: HTMLInputElement | null = document.querySelector("#search");
  * @return: Array<UserList>
  *      Liste des utilisateurs trouvées
  * *************************************** */
-function searchUser(): Array<UserList> {
+function searchUser(): Array<User> {
     const searchValue = inputSearch!.value;
     return localUserlist.filter(
         user => user.id == parseInt(searchValue, 10)
@@ -270,12 +270,12 @@ inputSearch!.addEventListener("keyup", (evnt: Event) => {
     const searchUserList = searchUser();
     setUserList(searchUserList);
     addButtons();
-    setColorByRole();
+    setColorByRole(searchUserList);
     addMouseEvent();
 });
 setUserList(localUserlist);
 addButtons();
-setColorByRole();
+setColorByRole(localUserlist);
 addMouseEvent();
 
 

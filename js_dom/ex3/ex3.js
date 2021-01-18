@@ -28,14 +28,14 @@ function setUserList(userlist) {
 //3.2
 /******************************************
  *  Colore chaque utilisateur dans le DOM suivant son role
- *  @param void
+ *  @param Liste des utilisateurs a modifier
  *  @return void
  * *************************************** */
-function setColorByRole() {
+function setColorByRole(arrayUsers) {
     const listPofUsers = divUserlist.querySelectorAll("p");
     let i = 0;
     listPofUsers.forEach((p) => {
-        p.style.color = localUserlist[i].role === "administrateur" ? "red" : "blue";
+        p.style.color = arrayUsers[i].role === "administrateur" ? "red" : "blue";
         i++;
     });
 }
@@ -54,7 +54,7 @@ function addMouseEvent() {
                 evntChild.stopImmediatePropagation();
                 const domUserId = parseInt(elem.getAttribute("id"), 10);
                 modifyUser(domUserId);
-                setColorByRole();
+                setColorByRole(localUserlist);
             });
         });
         elem.addEventListener("mouseleave", (evnt) => {
@@ -164,7 +164,7 @@ inputCreateUser.addEventListener("click", (evnt) => {
     divUserlist.innerHTML = "";
     setUserList(localUserlist);
     addNewUser();
-    setColorByRole();
+    setColorByRole(localUserlist);
     addMouseEvent();
     addButtons();
 });
@@ -181,7 +181,7 @@ btnSortById.addEventListener("click", (evnt) => {
     divUserlist.innerHTML = "";
     setUserList(localUserlist);
     localStorage.setItem("userList", JSON.stringify(localUserlist));
-    setColorByRole();
+    setColorByRole(localUserlist);
     addMouseEvent();
     addButtons();
 });
@@ -197,7 +197,7 @@ btnSortByName.addEventListener("click", (evnt) => {
     divUserlist.innerHTML = "";
     setUserList(localUserlist);
     localStorage.setItem("userList", JSON.stringify(localUserlist));
-    setColorByRole();
+    setColorByRole(localUserlist);
     addMouseEvent();
     addButtons();
 });
@@ -213,7 +213,7 @@ btnSortByAge.addEventListener("click", (evnt) => {
     divUserlist.innerHTML = "";
     setUserList(localUserlist);
     localStorage.setItem("userList", JSON.stringify(localUserlist));
-    setColorByRole();
+    setColorByRole(localUserlist);
     addMouseEvent();
     addButtons();
 });
@@ -236,10 +236,10 @@ inputSearch.addEventListener("keyup", (evnt) => {
     const searchUserList = searchUser();
     setUserList(searchUserList);
     addButtons();
-    setColorByRole();
+    setColorByRole(searchUserList);
     addMouseEvent();
 });
 setUserList(localUserlist);
 addButtons();
-setColorByRole();
+setColorByRole(localUserlist);
 addMouseEvent();

@@ -31,7 +31,7 @@ function setUserList(userlist: Array<UserList>): void {
     userlist.forEach((elem: UserList) => {
         i++;
         const p = document.createElement("p")
-        p.textContent = `Prenom: ${elem.prenom};Age: ${elem.age};Role: ${elem.role}`;
+        p.textContent = `ID:${elem.id}; Prenom: ${elem.prenom};Age: ${elem.age};Role: ${elem.role}`;
         divUserlist!.appendChild(p);
     });
 }

@@ -46,7 +46,7 @@ function setColorByRole() {
  *  @return void
  * *************************************** */
 function addMouseEvent() {
-    const listPofUsers = divUserlist === null || divUserlist === void 0 ? void 0 : divUserlist.querySelectorAll("p");
+    const listPofUsers = divUserlist?.querySelectorAll("p");
     listPofUsers.forEach((elem) => {
         elem.addEventListener("mouseenter", (evnt) => {
             elem.style.backgroundColor = "grey";
@@ -178,12 +178,7 @@ let countSortById = 0;
  * *************************************** */
 btnSortById.addEventListener("click", (evnt) => {
     evnt.preventDefault();
-    if (countSortById % 2 === 0) {
-        localUserlist.sort((a, b) => a.id - b.id);
-    }
-    else {
-        localUserlist.sort((a, b) => b.id - a.id);
-    }
+    countSortById % 2 === 0 ? localUserlist.sort((a, b) => a.id - b.id) : localUserlist.sort((a, b) => b.id - a.id);
     countSortById++;
     divUserlist.innerHTML = "";
     setUserList(localUserlist);
@@ -199,12 +194,7 @@ let countSortByName = 0;
  * *************************************** */
 btnSortByName.addEventListener("click", (evnt) => {
     evnt.preventDefault();
-    if (countSortByName % 2 === 0) {
-        localUserlist.sort((a, b) => a.prenom.localeCompare(b.prenom));
-    }
-    else {
-        localUserlist.sort((a, b) => b.prenom.localeCompare(a.prenom));
-    }
+    countSortByName % 2 === 0 ? localUserlist.sort((a, b) => a.prenom.localeCompare(b.prenom)) : localUserlist.sort((a, b) => b.prenom.localeCompare(a.prenom));
     countSortByName++;
     divUserlist.innerHTML = "";
     setUserList(localUserlist);
@@ -220,12 +210,7 @@ let countSortByAge = 0;
  * *************************************** */
 btnSortByAge.addEventListener("click", (evnt) => {
     evnt.preventDefault();
-    if (countSortByAge % 2 === 0) {
-        localUserlist.sort((a, b) => a.age - b.age);
-    }
-    else {
-        localUserlist.sort((a, b) => b.age - a.age);
-    }
+    countSortByAge % 2 === 0 ? localUserlist.sort((a, b) => a.age - b.age) : localUserlist.sort((a, b) => b.age - a.age);
     countSortByAge++;
     divUserlist.innerHTML = "";
     setUserList(localUserlist);

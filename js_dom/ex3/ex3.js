@@ -126,13 +126,11 @@ function addButtons() {
         btn.addEventListener("click", (evnt) => {
             divContainer.removeChild(elem);
             localUserlist = localUserlist.filter(element => element.id != parseInt(elem.id, 10));
-            console.log(localUserlist);
             let i = 1;
             localUserlist.forEach((elemnt) => {
                 elemnt.id = i;
                 i++;
             });
-            console.log(localUserlist);
             localStorage.setItem("userList", JSON.stringify(localUserlist));
             window.location.reload();
         });
@@ -228,7 +226,7 @@ const inputSearch = document.querySelector("#search");
  * *************************************** */
 function searchUser() {
     const searchValue = inputSearch.value;
-    return userlist.filter(user => user.id == parseInt(searchValue, 10)
+    return localUserlist.filter(user => user.id == parseInt(searchValue, 10)
         || user.age === parseInt(searchValue, 10)
         || user.role.toUpperCase().includes(searchValue.toUpperCase())
         || user.prenom.toUpperCase().includes(searchValue.toUpperCase()));

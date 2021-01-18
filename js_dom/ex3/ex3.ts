@@ -257,7 +257,7 @@ const inputSearch: HTMLInputElement | null = document.querySelector("#search");
  * *************************************** */
 function searchUser(): Array<UserList> {
     const searchValue = inputSearch!.value;
-    return userlist.filter(
+    return localUserlist.filter(
         user => user.id == parseInt(searchValue, 10)
             || user.age === parseInt(searchValue, 10)
             || user.role.toUpperCase().includes(searchValue.toUpperCase())

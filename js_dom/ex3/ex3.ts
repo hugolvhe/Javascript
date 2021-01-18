@@ -148,13 +148,11 @@ function addButtons() {
         btn.addEventListener("click", (evnt) => {
             divContainer.removeChild(elem);
             localUserlist = localUserlist.filter(element => element.id != parseInt(elem.id, 10));
-            console.log(localUserlist);
             let i = 1;
             localUserlist.forEach( (elemnt) => {
                 elemnt.id = i;
                 i++;
             });
-            console.log(localUserlist);    
             localStorage.setItem("userList",JSON.stringify(localUserlist));
             window.location.reload();
         });

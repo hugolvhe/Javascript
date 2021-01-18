@@ -5,9 +5,10 @@ const userlist = [
     { id: 1, prenom: "Damien", age: 40, role: "utilisateur" },
     { id: 2, prenom: "Camille", age: 29, role: "administrateur" },
     { id: 3, prenom: "Marie", age: 35, role: "utilisateur" },
-    { id: 4, prenom: "Roger", age: 60, role: "utilisateur" },
+    { id: 4, prenom: "Roger", age: 60, role: "utilisateur" }
 ];
 let localUserlist = localStorage.getItem("userList") === null ? userlist : JSON.parse(localStorage.getItem("userList"));
+localStorage.setItem("userList", JSON.stringify(localUserlist));
 const divUserlist = document.querySelector("#userList");
 // 3.1
 /******************************************
@@ -16,9 +17,11 @@ const divUserlist = document.querySelector("#userList");
  * @return void
  * *************************************** */
 function setUserList(userlist) {
+    let i = 0;
     userlist.forEach((elem) => {
+        i++;
         const p = document.createElement("p");
-        p.textContent = `ID: ${elem.id};Prenom: ${elem.prenom};Age: ${elem.age};Role: ${elem.role}`;
+        p.textContent = `Prenom: ${elem.prenom};Age: ${elem.age};Role: ${elem.role}`;
         divUserlist.appendChild(p);
     });
 }
@@ -118,10 +121,20 @@ function addButtons() {
     listPofUsers.forEach((elem) => {
         elem.setAttribute("id", id.toString());
         const divContainer = document.createElement("div");
-        const btn = createButtonChild(id, 150, 50);
+        const btn = createButtonChild("supprimer", 200, 25);
         myAppendChild([elem, btn], divContainer);
         btn.addEventListener("click", (evnt) => {
             divContainer.removeChild(elem);
+            localUserlist = localUserlist.filter(element => element.id != parseInt(elem.id, 10));
+            console.log(localUserlist);
+            let i = 1;
+            localUserlist.forEach((elemnt) => {
+                elemnt.id = i;
+                i++;
+            });
+            console.log(localUserlist);
+            localStorage.setItem("userList", JSON.stringify(localUserlist));
+            window.location.reload();
         });
         myAppendChild([divContainer], divUserlist);
         divContainer.style.display = "flex";
@@ -161,8 +174,7 @@ inputCreateUser.addEventListener("click", (evnt) => {
 const btnSortById = document.querySelector("#sortById");
 let countSortById = 0;
 /******************************************
- *  ajoute un nouvel utilisateur
- * @return: void
+ * Event : Trie par ID croissant et décroissant
  * *************************************** */
 btnSortById.addEventListener("click", (evnt) => {
     evnt.preventDefault();
@@ -183,8 +195,7 @@ btnSortById.addEventListener("click", (evnt) => {
 const btnSortByName = document.querySelector("#sortByName");
 let countSortByName = 0;
 /******************************************
- *  Tri par name
- * @return: void
+ *  Event : Tri par nom croissant et décroisant
  * *************************************** */
 btnSortByName.addEventListener("click", (evnt) => {
     evnt.preventDefault();
@@ -205,8 +216,7 @@ btnSortByName.addEventListener("click", (evnt) => {
 const btnSortByAge = document.querySelector("#sortByAge");
 let countSortByAge = 0;
 /******************************************
- * Tri par age
- * @return: void
+ *  Event : Tri par age croissant et décroisant
  * *************************************** */
 btnSortByAge.addEventListener("click", (evnt) => {
     evnt.preventDefault();
@@ -250,38 +260,3 @@ setUserList(localUserlist);
 addButtons();
 setColorByRole();
 addMouseEvent();
-//  3.8
-/******************************************
- *  Recherche des utilisateurs par prenom,id,role,age
- * @return: Array<UserList>
- *      Liste des utilisateurs trouvées
- * *************************************** */
-// function addMouseEvent() {
-//     const listPofUsers: NodeListOf<HTMLParagraphElement> | undefined = divUserlist?.querySelectorAll("p");
-//     listPofUsers!.forEach((elem: HTMLParagraphElement) => {
-//         elem.addEventListener("mouseenter", (evnt: Event) => {
-//             elem.style.backgroundColor = "grey";
-//             elem.addEventListener("click", (evntChild: Event) => {
-//                 evntChild!.stopImmediatePropagation();
-//                 const domUserId = parseInt(elem.getAttribute("id")!, 10);
-//                 modifyUser(domUserId);
-//                 setColorByRole();
-//             })
-//         })
-//         elem.addEventListener("mouseleave", (evnt: Event) => {
-//             elem.style.backgroundColor = "white";
-//         })
-//     })
-// }
-// function modifyUser(domUserId:number) {
-//     const user: UserList = {
-//         id: domUserId,
-//         prenom: `${(<HTMLInputElement>document.querySelector("form > input[name='name']")).value}`,
-//         age: `${(<HTMLInputElement>document.querySelector("form > input[name='age']")).value}`,
-//         role: `${(<HTMLInputElement>document.querySelector("form > select[name='role']")).value}`
-//     };
-//    localUserlist[domUserId-1] = user;
-//    localStorage.setItem("userList", JSON.stringify(localUserlist));
-//    const p:HTMLParagraphElement|null = document.querySelector(`div > p[id='${domUserId}'`);
-//    p!.textContent = `ID: ${user.id};Prenom: ${user.prenom};Age:${user.age};Role: ${user.role}`;
-// }
